@@ -1,4 +1,6 @@
 #includ <stdio.h>
 int main(void){
-	print("First Git Practice");
+	printf("First Git Practice\n");
+	printf("Version 2");
+
 }
