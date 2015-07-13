@@ -1,44 +1,62 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-#define MAX_SIZE 100
-char arraystack[MAX_SIZE];
-int top = -1;
+typedef struct node *listptr;
+typedef struct node{
+	char data;
+	listptr *link;
+}node;
 
-void push(int *top, char x){
-	if(*top == MAX_SIZE-1)
-		printf("stack is full!\n");
-	else
-		arraystack[++(*top)] = x;
+void push(listptr *top, char x){
+	listptr temp;
+	temp = (listptr)malloc(sizeof(node));
+	if(!temp)
+		printf("memory is full!\n");
+	else{
+		temp->data = x;
+		temp->link = *top;
+		*top = temp;
+	}
 }
-char pop(int *top){
-	if(*top == -1)
+char pop(listptr *top){
+	char x;
+	listptr temp =NULL;
+	
+	if(*top == NULL)
 		return '$';
-	else
-		return arraystack[(*top)--];
-
+	else{
+		temp = *top;
+		x = temp->data;
+		*top = temp->link;
+		free(temp);
+		return x;
+	}
 }
 
 int main(void){
+	node* top = NULL;
+	//top = (listptr)malloc(sizeof(node));
+
 	int t, check = 0;
 	char x;
 
 	while(check != -1){
-		printf("¾î´À ÀÛ¾÷À» ÇÏ½Ã°Ú½À´Ï±î? (1. push 2. pop 3. Á¾·á) : ");
+		printf("ì–´ëŠ ì‘ì—…ì„ í•˜ì‹œê² ìŠµë‹ˆê¹Œ? (1. push 2. pop 3. ì¢…ë£Œ) : ");
 		scanf("%d", &t);
 		fflush(stdin);
 		switch(t){
 			case 1:
-				printf("¾î´À ¹®ÀÚ¸¦ Çª½¬ÇÏ½Ã°Ú½À´Ï±î? :");
+				printf("ì–´ëŠ ë¬¸ìë¥¼ í‘¸ì‰¬í•˜ì‹œê² ìŠµë‹ˆê¹Œ? :");
 				scanf("%c", &x);
 				fflush(stdin);
 				push(&top, x);
 				break;
 			case 2:
 				x = pop(&top);
-				printf("´ÙÀ½ ¹®ÀÚ°¡ ÆËµÇ¾ú½À´Ï´Ù : %c", x);
+				printf("ë‹¤ìŒ ë¬¸ìê°€ íŒë˜ì—ˆìŠµë‹ˆë‹¤ : %c", x);
 				break;
 			case 3:
-				printf("ÇÁ·Î±×·¥À» Á¾·áÇÕ´Ï´Ù.");
+				printf("í”„ë¡œê·¸ë¨ì„ ì¢…ë£Œí•©ë‹ˆë‹¤.");
 				check = -1;
 				break;
 		}
