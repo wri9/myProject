@@ -1,42 +1,24 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-typedef struct node *listptr;
-typedef struct node{
-	char data;
-	listptr *link;
-}node;
+#define MAX_SIZE 100
+char arraystack[MAX_SIZE];
+int top = -1;
 
-void push(listptr *top, char x){
-	listptr temp;
-	temp = (listptr)malloc(sizeof(node));
-	if(!temp)
-		printf("memory is full!\n");
-	else{
-		temp->data = x;
-		temp->link = *top;
-		*top = temp;
-	}
+void push(int *top, char x){
+	if(*top == MAX_SIZE-1)
+		printf("stack is full!\n");
+	else
+		arraystack[++(*top)] = x;
 }
-char pop(listptr *top){
-	char x;
-	listptr temp =NULL;
-	
-	if(*top == NULL)
+char pop(int *top){
+	if(*top == -1)
 		return '$';
-	else{
-		temp = *top;
-		x = temp->data;
-		*top = temp->link;
-		free(temp);
-		return x;
-	}
+	else
+		return arraystack[(*top)--];
+
 }
 
 int main(void){
-	node* top = NULL;
-	//top = (listptr)malloc(sizeof(node));
-
 	int t, check = 0;
 	char x;
 
