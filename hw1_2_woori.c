@@ -7,8 +7,6 @@ typedef struct node{
 	listptr *link;
 }node;
 
-
-
 void push(listptr *top, char x){
 	listptr temp;
 	temp = (listptr)malloc(sizeof(node));
@@ -16,48 +14,49 @@ void push(listptr *top, char x){
 		printf("memory is full!\n");
 	else{
 		temp->data = x;
-		temp->link = top;
+		temp->link = *top;
 		*top = temp;
 	}
 }
 char pop(listptr *top){
 	char x;
-	listptr temp;
-	temp = *top;
-	if(temp == NULL)
+	listptr temp =NULL;
+	
+	if(*top == NULL)
 		return '$';
 	else{
+		temp = *top;
 		x = temp->data;
-		top = temp->link;
+		*top = temp->link;
 		free(temp);
 		return x;
 	}
 }
 
 int main(void){
-	listptr top = NULL;
+	node* top = NULL;
 	//top = (listptr)malloc(sizeof(node));
 
 	int t, check = 0;
 	char x;
 
 	while(check != -1){
-		printf("¾î´À ÀÛ¾÷À» ÇÏ½Ã°Ú½À´Ï±î? (1. push 2. pop 3. Á¾·á) : ");
+		printf("ì–´ëŠ ì‘ì—…ì„ í•˜ì‹œê² ìŠµë‹ˆê¹Œ? (1. push 2. pop 3. ì¢…ë£Œ) : ");
 		scanf("%d", &t);
 		fflush(stdin);
 		switch(t){
 			case 1:
-				printf("¾î´À ¹®ÀÚ¸¦ Çª½¬ÇÏ½Ã°Ú½À´Ï±î? :");
+				printf("ì–´ëŠ ë¬¸ìë¥¼ í‘¸ì‰¬í•˜ì‹œê² ìŠµë‹ˆê¹Œ? :");
 				scanf("%c", &x);
 				fflush(stdin);
 				push(&top, x);
 				break;
 			case 2:
 				x = pop(&top);
-				printf("´ÙÀ½ ¹®ÀÚ°¡ ÆËµÇ¾ú½À´Ï´Ù : %c", x);
+				printf("ë‹¤ìŒ ë¬¸ìê°€ íŒë˜ì—ˆìŠµë‹ˆë‹¤ : %c", x);
 				break;
 			case 3:
-				printf("ÇÁ·Î±×·¥À» Á¾·áÇÕ´Ï´Ù.");
+				printf("í”„ë¡œê·¸ë¨ì„ ì¢…ë£Œí•©ë‹ˆë‹¤.");
 				check = -1;
 				break;
 		}
